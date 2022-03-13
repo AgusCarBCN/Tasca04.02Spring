@@ -18,13 +18,13 @@ public class ListaDeEmpleados {
 	// Base de datos inicial
 	private ListaDeEmpleados() {
 
-		listaEmpleados.add(new Empleado(1, "Jose", "administrativo", "imagen.webp"));
-		listaEmpleados.add(new Empleado(2, "Ana", "administrativo", "imagen.webp"));
-		listaEmpleados.add(new Empleado(3, "Sergio", "operario", "imagen.webp"));
-		listaEmpleados.add(new Empleado(4, "Salvador", "operario", "imagen.webp"));
-		listaEmpleados.add(new Empleado(5, "Ambrosio", "operario", "imagen.webp"));
-		listaEmpleados.add(new Empleado(6, "Julia", "tecnico", "imagen.webp"));
-		listaEmpleados.add(new Empleado(7, "Adela", "gerente", "imagen.webp"));
+		listaEmpleados.add(new Empleado(1, "Jose", "administrativo", "imagen.webp",1));
+		listaEmpleados.add(new Empleado(2, "Ana", "administrativo", "imagen.webp",1));
+		listaEmpleados.add(new Empleado(3, "Sergio", "operario", "imagen.webp",1));
+		listaEmpleados.add(new Empleado(4, "Salvador", "operario", "imagen.webp",0));
+		listaEmpleados.add(new Empleado(5, "Ambrosio", "operario", "imagen.webp",1));
+		listaEmpleados.add(new Empleado(6, "Julia", "tecnico", "imagen.webp",0));
+		listaEmpleados.add(new Empleado(7, "Adela", "gerente", "imagen.webp",0));
 	}
 
 	public static ListaDeEmpleados getInstance() {
@@ -128,6 +128,7 @@ public class ListaDeEmpleados {
 				emp.setNombre(empleado.getNombre());
 				emp.setTrabajo(empleado.getTrabajo());
 				emp.setSalario(empleado.getSalario());
+				emp.setDisponible(empleado.getDisponible());
 
 			}
 		}

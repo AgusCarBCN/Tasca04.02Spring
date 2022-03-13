@@ -20,16 +20,18 @@ public class Empleado {
 	private String trabajo;
 	private String foto;
 	private Double salario;
+	private Integer disponible;
 	static {
 		counter = 1;
 	}
 
-	public Empleado(Integer id, String nombre, String trabajo,String foto) {
+	public Empleado(Integer id, String nombre, String trabajo,String foto,Integer disponible) {
 
 		this.id = counter++;
 		this.nombre = nombre;
 		this.trabajo = trabajo;		
 		this.foto=foto;
+		this.disponible=disponible;
 		if (trabajo.equals("operario")) {
 			salario = 20000.0;
 		} else if (trabajo.equals("tecnico")) {

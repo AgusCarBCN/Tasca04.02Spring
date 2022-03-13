@@ -48,8 +48,9 @@
 				<th>SALARIO</th>
 				<th>FOTO</th>
 				<th>ELIMINAR</th>
-				<th>CAMBIAR TRABAJO</th>
+				<th>MODIFICAR</th>
 				<th>MOSTRAR FOTO</th>
+				<th>DISPONIBILIDAD</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -62,6 +63,7 @@
 				<td><a th:href="@{/eliminar/}+${emp.id}">eliminar</a></td>
 				<td><a th:href="@{/modificar/}+${emp.id}">cambiar trabajo</a></td>
 				<td><a th:href="@{/img-fotos/}+${emp.foto}">mostrar foto</a></td>
+				<td th:text="${emp.disponible==1 ? 'Disponible':'No Disponible'}"></td>
 		</tbody>
 	</table>
 	<div class="align-center">
@@ -88,9 +90,19 @@
 				<label for="fotoEmpleado">Foto</label> <input type="file"
 					class="form-control-file" name="fotoEmpleado" id="fotoEmpleado">
 			</div>
+			<div class="mb-3">
+				<label for="disponible">Disponibilidad:</label> <select name=disponible
+					th:value="${empleado?.disponible}">
+					<option value=1>disponible</option>
+					<option value=0>no disponible</option>
+					
+				</select>
+			</div>
+			
 			<div class="col-auto">
 				<button type="submit" class="btn btn-primary">Agregar</button>
 			</div>
+			
 
 		</form>
 	</div>
@@ -112,6 +124,14 @@
 					<option value="administrativo">administrativo</option>
 					<option value="tecnico">tecnico</option>
 					<option value="gerente">gerente</option>
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="disponible">Disponibilidad:</label> <select name=disponible
+					th:value="${empleado?.disponible}">
+					<option value=1>disponible</option>
+					<option value=0>no disponible</option>
+					
 				</select>
 			</div>
 			<div class="col-auto">
