@@ -49,6 +49,7 @@
 				<th>FOTO</th>
 				<th>ELIMINAR</th>
 				<th>CAMBIAR TRABAJO</th>
+				<th>MOSTRAR FOTO</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -60,6 +61,7 @@
 				<td><img th:src="@{/img-fotos/}+${emp.foto}" width="100"/></td>
 				<td><a th:href="@{/eliminar/}+${emp.id}">eliminar</a></td>
 				<td><a th:href="@{/modificar/}+${emp.id}">cambiar trabajo</a></td>
+				<td><a th:href="@{/img-fotos/}+${emp.foto}">mostrar foto</a></td>
 		</tbody>
 	</table>
 	<div class="align-center">
