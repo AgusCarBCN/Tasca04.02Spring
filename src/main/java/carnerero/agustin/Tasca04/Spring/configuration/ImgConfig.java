@@ -1,4 +1,4 @@
-package carnerero.agustin.Tasca04.Spring;
+package carnerero.agustin.Tasca04.Spring.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

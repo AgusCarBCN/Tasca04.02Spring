@@ -1,6 +1,5 @@
 package carnerero.agustin.Tasca04.Spring.controller;
 
-
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,8 @@ import carnerero.agustin.Tasca04.Spring.repository.ListaDeEmpleados;
 public class EmpleadosController {
 
 	ListaDeEmpleados repoEmpleados = ListaDeEmpleados.getInstance();
-	 String ruta = "C:/empleados/img-fotos/";
+	String ruta = "C:/empleados/img-fotos/";
+
 	@GetMapping("/")
 	public String mostrarTodos(Model model) {
 		List<Empleado> listEmployees = repoEmpleados.getListaEmpleados();
@@ -42,10 +42,9 @@ public class EmpleadosController {
 			return "formulario";
 		}
 		if (!foto.isEmpty()) {
-			
-			String nombreImagen = repoEmpleados.guardarArchivo(foto, ruta);
-			if (nombreImagen != null) {
-				empleado.setFoto(nombreImagen);
+			String nombreFoto = repoEmpleados.guardarArchivo(foto, ruta);
+			if (nombreFoto != null) {
+				empleado.setFoto(nombreFoto);
 			}
 		}
 		repoEmpleados.insertar(empleado);
@@ -76,7 +75,5 @@ public class EmpleadosController {
 		model.addAttribute("empleados", repoEmpleados.getListaEmpleados());
 		return "listadeempleados";
 	}
-	
-	
 
 }

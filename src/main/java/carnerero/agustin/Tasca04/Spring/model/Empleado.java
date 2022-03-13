@@ -25,12 +25,13 @@ public class Empleado {
 		counter = 1;
 	}
 
-	public Empleado(Integer id, String nombre, String trabajo,String foto,Integer disponible) {
+	public Empleado(Integer id, String nombre, String trabajo,Integer disponible) {
 
 		this.id = counter++;
 		this.nombre = nombre;
-		this.trabajo = trabajo;		
-		this.foto=foto;
+		this.trabajo = trabajo;	
+		//Si no se asigna una foto por defecto saldrá la imagen de foto anonima
+		this.foto="imagen.webp";
 		this.disponible=disponible;
 		if (trabajo.equals("operario")) {
 			salario = 20000.0;
