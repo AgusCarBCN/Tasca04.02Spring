@@ -13,7 +13,7 @@
 <body class="p-3 mb-2 bg-dark text-white">
 
 	<h3>Añadir empleado</h3>
-	<form class="row gx-3 gy-2 align-items-center" action="/agregar"
+	<form class="row gx-3 gy-2 align-items-center" th:action="@{/empleados/agregar}"
 		th:object="${empleado}" enctype="multipart/form-data" method="post">
 		<div id="error" th:errors="*{nombre}"></div>
 		<div class="mb-3">
