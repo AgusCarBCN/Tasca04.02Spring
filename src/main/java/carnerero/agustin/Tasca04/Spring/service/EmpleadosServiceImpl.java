@@ -16,7 +16,7 @@ public class EmpleadosServiceImpl implements IEmpleadosService {
 	private List<Empleado> listaEmpleados=null;
 	private List<Empleado> listaPorTrabajos=null;
 
-	private EmpleadosServiceImpl() {
+	public EmpleadosServiceImpl() {
 		listaEmpleados = new ArrayList<>();
 		listaPorTrabajos = new ArrayList<>();
 		listaEmpleados.add(new Empleado(1, "Jose", "administrativo", 1));
