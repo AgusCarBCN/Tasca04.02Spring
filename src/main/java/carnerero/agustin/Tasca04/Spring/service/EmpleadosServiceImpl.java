@@ -62,7 +62,7 @@ public class EmpleadosServiceImpl implements IEmpleadosService {
 				emp.setTrabajo(empleado.getTrabajo());
 				emp.setSalario(empleado.getSalario());
 				emp.setDisponible(empleado.getDisponible());
-
+				emp.setFoto(empleado.getFoto());
 			}
 		}
 		if (!encontrado) {

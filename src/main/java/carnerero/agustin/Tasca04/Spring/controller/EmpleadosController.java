@@ -28,6 +28,7 @@ public class EmpleadosController {
 	// Inyectamos clase servicio en controller
 	@Autowired
 	private IEmpleadosService serviceEmpleados;
+	
 	private String ruta = "C:/empleados/img-fotos/";
 
 	@GetMapping("/")
@@ -98,7 +99,14 @@ public class EmpleadosController {
 	}
 
 	@PostMapping("/modificar")
-	public String modificar(Empleado empleado, Model model) {
+	public String modificar(Empleado empleado, Model model,@RequestParam("fotoEmpleado") MultipartFile foto) {
+		if (!foto.isEmpty()) {
+			String nombreFoto = serviceEmpleados.guardarArchivo(foto, ruta);
+			if (nombreFoto != null) {
+				empleado.setFoto(nombreFoto);
+			}
+		}		
+		
 		serviceEmpleados.editaEmpleado(empleado);
 		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
 		return "listadeempleados";

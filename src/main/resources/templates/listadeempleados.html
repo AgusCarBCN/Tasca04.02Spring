@@ -28,7 +28,7 @@
 				<th>MODIFICAR</th>
 				<th>EMPLEADO</th>
 				<th>DESCARGA FOTO</th>
-				
+
 			</tr>
 		</thead>
 		<tbody>
@@ -46,7 +46,8 @@
 				<!--  <td th:text="${emp.disponible==1 ? 'Si':'No'}"></td>-->
 				<td><a th:href="@{/empleados/empleado/}+${emp.id}">mostrar
 						empleado</a></td>
-				<td><a th:href="@{/empleados/descargar/}+${emp.id}">descargar foto</a></td>		
+				<td><a th:href="@{/empleados/descargar/}+${emp.id}">descargar
+						foto</a></td>
 		</tbody>
 	</table>
 	<div class="align-center">
@@ -93,7 +94,8 @@
 	<div class="align-center">
 		<h3>Modificar datos de empleado</h3>
 		<form class="row row-cols-lg-auto g-3 align-items-center"
-			th:action="@{/empleados/modificar}" method="post">
+			th:action="@{/empleados/modificar}" th:object="${empleado}"
+			enctype="multipart/form-data" method="post">
 			<div class="mb-3">
 				<label for="id">id:</label> <input type=number name=id
 					readonly="readonly" th:value="${empleado?.id}">
@@ -109,7 +111,10 @@
 					<option value="gerente">gerente</option>
 				</select>
 			</div>
-
+			<div class="mb-3">
+				<label for="fotoEmpleado">Foto</label> <input type="file"
+					class="form-control-file" name="fotoEmpleado" id="fotoEmpleado">
+			</div>
 			<div class="mb-3">
 				<label for="disponible">Disponibilidad:</label> <select
 					name=disponible th:value="${empleado?.disponible}">
