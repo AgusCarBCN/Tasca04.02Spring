@@ -11,14 +11,14 @@
 <link th:href="@{/css/styles.css}" rel="stylesheet">
 </head>
 <body class="p-3 mb-2 bg-dark text-white">
-
+<header th:insert="fragments/menu.html :: menu"> </header>
 	<h3>Añadir empleado</h3>
 	<form class="row gx-3 gy-2 align-items-center" th:action="@{/empleados/agregar}"
 		th:object="${empleado}" enctype="multipart/form-data" method="post">
 		<div id="error" th:errors="*{nombre}"></div>
 		<div class="mb-3">
 			<label for="nombre">Nombre:</label> <input type="text"
-				th:field="*{nombre}" placeholder="Escribe el nombre del empleado" />
+				th:field="*{nombre}" placeholder="Nombre del empleado" />
 		</div>
 		<div class="mb-3">
 			<label for="trabajo">Trabajo:</label> <select th:field="*{trabajo}"

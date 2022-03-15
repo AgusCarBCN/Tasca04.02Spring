@@ -1,8 +1,15 @@
 package carnerero.agustin.Tasca04.Spring.controller;
 
-import java.util.List;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,24 +23,22 @@ import carnerero.agustin.Tasca04.Spring.model.Empleado;
 import carnerero.agustin.Tasca04.Spring.service.IEmpleadosService;
 
 @Controller
-@RequestMapping(value="/empleados")
+@RequestMapping(value = "/empleados")
 public class EmpleadosController {
-	//Inyectamos clase servicio en controller
+	// Inyectamos clase servicio en controller
 	@Autowired
-	private IEmpleadosService serviceEmpleados;	
+	private IEmpleadosService serviceEmpleados;
 	private String ruta = "C:/empleados/img-fotos/";
 
 	@GetMapping("/")
 	public String mostrarTodos(Model model) {
-		List<Empleado> listEmployees = serviceEmpleados.listaEmpleados();
-		model.addAttribute("empleados", listEmployees);
+		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
 		return "listadeempleados";
 	}
 
 	@GetMapping("/{trabajo}")
 	public String buscarPorTrabajo(@PathVariable String trabajo, Model model) {
-		List<Empleado> listEmployeesByJob = serviceEmpleados.buscarPorEmpleo(trabajo);
-		model.addAttribute("empleados", listEmployeesByJob);
+		model.addAttribute("empleados", serviceEmpleados.buscarPorEmpleo(trabajo));
 		return "listadeempleados";
 	}
 
@@ -54,11 +59,32 @@ public class EmpleadosController {
 		return "listadeempleados";
 	}
 
+	@GetMapping("/descargar/{id}")
+	public ResponseEntity<Resource> descargar(@PathVariable int id) {
+		Empleado empleado = serviceEmpleados.buscarEmpleado(id);
+		String fotoEmpleado = empleado.getFoto();
+		Resource recurso = null;
+		Path rutaFoto = null;
+		try {
+			rutaFoto = Paths.get(ruta).resolve(fotoEmpleado).toAbsolutePath();
+			recurso = new UrlResource(rutaFoto.toUri());
+			if (!recurso.exists() || !recurso.isReadable()) {
+				throw new RuntimeException("Error: No se puede descargar la imagen");
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+
+		}
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
+				.body(recurso);
+
+	}
+
 	@GetMapping("/eliminar/{id}")
 	public String eliminarEmpleado(@PathVariable Integer id, Model model) {
-		List<Empleado> listEmployees = serviceEmpleados.listaEmpleados();
 		serviceEmpleados.eliminar(id);
-		model.addAttribute("empleados", listEmployees);
+		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
 		return "listadeempleados";
 
 	}
@@ -77,13 +103,13 @@ public class EmpleadosController {
 		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
 		return "listadeempleados";
 	}
-	
+
 	@GetMapping("/empleado/{id}")
-	public String verDetalle(@PathVariable("id") int id,Model model) {
+	public String verDetalle(@PathVariable("id") int id, Model model) {
 		Empleado empleado = serviceEmpleados.buscarEmpleado(id);
-		model.addAttribute("empleado",empleado);
+		model.addAttribute("empleado", empleado);
 		return "detalleDeEmpleado";
-		
+
 	}
 
 }

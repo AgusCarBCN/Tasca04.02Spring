@@ -14,28 +14,12 @@
 <h1 class="text-center">Listado de empleados</h1>
 
 <body class="p-3 mb-2 bg-dark text-white">
-	<nav class="fs-3 text-white">
-		<ul class="nav justify-content-center">
-			<li class="nav-item"><a class="nav-link active"
-				aria-current="page" th:href="@{/empleados/gerente/}">gerentes</a>
-			</li>
-			<li class="nav-item"><a class="nav-link"
-				th:href="@{/empleados/tecnico/}">técnicos</a></li>
-			<li class="nav-item"><a class="nav-link"
-				th:href="@{/empleados/dministrativo/}">administrativos</a>
-			</li>
-			<li class="nav-item"><a class="nav-link"
-				th:href="@{/empleados/operario/}">operarios</a></li>
-			<li class="nav-item"><a class="nav-link"
-				th:href="@{/empleados/}">todos</a></li>
-		</ul>
-	</nav>
-
+	<header th:insert="fragments/menu.html :: menu"> </header>
 	<table class="table table-dark table-striped">
 		<thead>
 			<tr>
-				<th >ID</th>
-				<th >NOMBRE</th>
+				<th>ID</th>
+				<th>NOMBRE</th>
 				<th>EMPLEO</th>
 				<th>SALARIO</th>
 				<th>FOTO</th>
@@ -43,6 +27,8 @@
 				<th>ELIMINAR</th>
 				<th>MODIFICAR</th>
 				<th>EMPLEADO</th>
+				<th>DESCARGA FOTO</th>
+				
 			</tr>
 		</thead>
 		<tbody>
@@ -51,16 +37,16 @@
 				<td th:text="${emp.nombre}"></td>
 				<td th:text="${emp.trabajo}"></td>
 				<td th:text="${emp.salario}"></td>
-				<td><img th:src="@{/img-fotos/}+${emp.foto}" width="100"/></td>
-				<td>
-				<span th:if="${emp.disponible==1}"  class="badge bg-success">Si</span>
-				<span th:unless="${emp.disponible==1}" class="badge bg-danger">No</span>
+				<td><img th:src="@{/img-fotos/}+${emp.foto}" width="100" /></td>
+				<td><span th:if="${emp.disponible==1}" class="badge bg-success">Si</span>
+					<span th:unless="${emp.disponible==1}" class="badge bg-danger">No</span>
 				</td>
 				<td><a th:href="@{/empleados/eliminar/}+${emp.id}">eliminar</a></td>
 				<td><a th:href="@{/empleados/modificar/}+${emp.id}">modificar</a></td>
 				<!--  <td th:text="${emp.disponible==1 ? 'Si':'No'}"></td>-->
-				<td><a th:href="@{/empleados/empleado/}+${emp.id}">mostrar empleado</a></td>
-		
+				<td><a th:href="@{/empleados/empleado/}+${emp.id}">mostrar
+						empleado</a></td>
+				<td><a th:href="@{/empleados/descargar/}+${emp.id}">descargar foto</a></td>		
 		</tbody>
 	</table>
 	<div class="align-center">
@@ -71,7 +57,7 @@
 
 			<div class="mb-3">
 				<label for="nombre">Nombre:</label> <input type="text" name=nombre
-					placeholder="Escribe el nombre del empleado" />
+					placeholder="Nombre del empleado" />
 
 			</div>
 			<div class="mb-3">
@@ -88,18 +74,18 @@
 					class="form-control-file" name="fotoEmpleado" id="fotoEmpleado">
 			</div>
 			<div class="mb-3">
-				<label for="disponible">Disponibilidad:</label> <select name=disponible
-					th:value="${empleado?.disponible}">
+				<label for="disponible">Disponibilidad:</label> <select
+					name=disponible th:value="${empleado?.disponible}">
 					<option value=1>disponible</option>
 					<option value=0>no disponible</option>
-					
+
 				</select>
 			</div>
-			
+
 			<div class="col-auto">
 				<button type="submit" class="btn btn-primary">Agregar</button>
 			</div>
-			
+
 
 		</form>
 	</div>
@@ -123,13 +109,13 @@
 					<option value="gerente">gerente</option>
 				</select>
 			</div>
-			
+
 			<div class="mb-3">
-				<label for="disponible">Disponibilidad:</label> <select name=disponible
-					th:value="${empleado?.disponible}">
+				<label for="disponible">Disponibilidad:</label> <select
+					name=disponible th:value="${empleado?.disponible}">
 					<option value=1>disponible</option>
 					<option value=0>no disponible</option>
-					
+
 				</select>
 			</div>
 			<div class="col-auto">

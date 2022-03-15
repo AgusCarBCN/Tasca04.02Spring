@@ -14,6 +14,8 @@ public interface IEmpleadosService {
 	List<Empleado> buscarPorEmpleo(String trabajo);
 
 	String guardarArchivo(MultipartFile foto, String ruta);
+	
+	
 
 	void insertar(@Valid Empleado empleado);
 
