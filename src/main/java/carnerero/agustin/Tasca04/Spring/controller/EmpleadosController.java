@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,7 @@ public class EmpleadosController {
 	// Inyectamos clase servicio en controller
 	@Autowired
 	private IEmpleadosService serviceEmpleados;
-	
+
 	private String ruta = "C:/empleados/img-fotos/";
 
 	@GetMapping("/")
@@ -47,6 +48,9 @@ public class EmpleadosController {
 	public String agregar(@Valid Empleado empleado, BindingResult result, Model model,
 			@RequestParam("fotoEmpleado") MultipartFile foto) {
 		if (result.hasErrors()) {
+			for (ObjectError error : result.getAllErrors()) {
+				System.err.println("Ocurrio un error: " + error.getDefaultMessage());
+			}
 			return "formulario";
 		}
 		if (!foto.isEmpty()) {
@@ -99,14 +103,14 @@ public class EmpleadosController {
 	}
 
 	@PostMapping("/modificar")
-	public String modificar(Empleado empleado, Model model,@RequestParam("fotoEmpleado") MultipartFile foto) {
+	public String modificar(Empleado empleado, Model model, @RequestParam("fotoEmpleado") MultipartFile foto) {
 		if (!foto.isEmpty()) {
 			String nombreFoto = serviceEmpleados.guardarArchivo(foto, ruta);
 			if (nombreFoto != null) {
 				empleado.setFoto(nombreFoto);
 			}
-		}		
-		
+		}
+
 		serviceEmpleados.editaEmpleado(empleado);
 		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
 		return "listadeempleados";
