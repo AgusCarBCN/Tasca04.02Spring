@@ -50,12 +50,15 @@
 						foto</a></td>
 		</tbody>
 	</table>
+	
+	<div th:if="${mensaje!=null}" class='alert alert-success' th:text="${mensaje}" role='alert'></div>
 	<div class="align-center">
+
 		<h3>Añadir empleado</h3>
 		<form class="row row-cols-lg-auto g-3 align-items-center"
 			th:action="@{/empleados/agregar}" th:object="${empleado}"
 			enctype="multipart/form-data" method="post">
-		
+
 			<div class="mb-3">
 				<label for="nombre">Nombre:</label> <input type="text" name=nombre
 					placeholder="Nombre del empleado" />

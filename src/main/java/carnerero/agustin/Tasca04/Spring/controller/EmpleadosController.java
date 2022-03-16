@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import carnerero.agustin.Tasca04.Spring.model.Empleado;
 import carnerero.agustin.Tasca04.Spring.service.IEmpleadosService;
 
@@ -45,12 +47,13 @@ public class EmpleadosController {
 	}
 
 	@PostMapping("/agregar")
-	public String agregar(@Valid Empleado empleado, BindingResult result, Model model,
+	public String agregar(@Valid Empleado empleado, BindingResult result,Model model,
 			@RequestParam("fotoEmpleado") MultipartFile foto) {
 		if (result.hasErrors()) {
 			for (ObjectError error : result.getAllErrors()) {
 				System.err.println("Ocurrio un error: " + error.getDefaultMessage());
 			}
+
 			return "formulario";
 		}
 		if (!foto.isEmpty()) {
@@ -59,8 +62,10 @@ public class EmpleadosController {
 				empleado.setFoto(nombreFoto);
 			}
 		}
-		serviceEmpleados.insertar(empleado);
+		serviceEmpleados.insertar(empleado);		
+		model.addAttribute("mensaje", "empleado agregado correctamente");
 		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
+		System.out.println("Empleado agregado correctamente.");
 		return "listadeempleados";
 	}
 
