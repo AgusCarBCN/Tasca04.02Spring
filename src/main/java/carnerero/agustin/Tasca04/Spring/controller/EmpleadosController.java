@@ -46,8 +46,15 @@ public class EmpleadosController {
 		return "listadeempleados";
 	}
 
+	// Renderiza formulario.htlm
+	@GetMapping("/formulario")
+	public String getFormulario(Empleado empleado) {
+		return "formulario";
+	}
+
+	// Método que recibe los valores de los inputs del formulario
 	@PostMapping("/agregar")
-	public String agregar(@Valid Empleado empleado, BindingResult result,Model model,
+	public String agregar(@Valid Empleado empleado, BindingResult result, RedirectAttributes attributes,
 			@RequestParam("fotoEmpleado") MultipartFile foto) {
 		if (result.hasErrors()) {
 			for (ObjectError error : result.getAllErrors()) {
@@ -62,11 +69,10 @@ public class EmpleadosController {
 				empleado.setFoto(nombreFoto);
 			}
 		}
-		serviceEmpleados.insertar(empleado);		
-		model.addAttribute("mensaje", "empleado agregado correctamente");
-		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
+		serviceEmpleados.insertar(empleado);
+		attributes.addFlashAttribute("mensaje", "empleado agregado correctamente");				
 		System.out.println("Empleado agregado correctamente.");
-		return "listadeempleados";
+		return "redirect:/empleados/";
 	}
 
 	@GetMapping("/descargar/{id}")
@@ -104,24 +110,42 @@ public class EmpleadosController {
 		Empleado empleado = serviceEmpleados.buscarEmpleado(id);
 		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
 		model.addAttribute("empleado", empleado);
-		return "listadeempleados";
+		return "formulario2";
 	}
 
 	@PostMapping("/modificar")
-	public String modificar(Empleado empleado, Model model, @RequestParam("fotoEmpleado") MultipartFile foto) {
+	public String modificar(Empleado empleado, RedirectAttributes attributes) {	
+		serviceEmpleados.editaEmpleado(empleado);
+		attributes.addFlashAttribute("mensaje2", "modificacion de datos correcta");				
+		System.out.println("Modificacion de datos correcta.");
+		return "redirect:/empleados/";
+	}
+
+	@GetMapping("/cambiarfoto/{id}")
+	public String cambiarFoto(@PathVariable Integer id, Model model) {
+		Empleado empleado = serviceEmpleados.buscarEmpleado(id);
+		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
+		model.addAttribute("empleado", empleado);
+		return "formulario2";
+	}
+	
+	@PostMapping("/cambiarfoto")
+	public String modificarfoto(Empleado empleado,RedirectAttributes attributes , @RequestParam("fotoEmpleado") MultipartFile foto)
+{
 		if (!foto.isEmpty()) {
 			String nombreFoto = serviceEmpleados.guardarArchivo(foto, ruta);
 			if (nombreFoto != null) {
 				empleado.setFoto(nombreFoto);
 			}
 		}
+		serviceEmpleados.cambiaFoto(empleado);
+		attributes.addFlashAttribute("mensaje3", "Has cambiado la foto");				
+		System.out.println("Cambio de foto correcta.");
+		return "redirect:/empleados/";
+		
+}
 
-		serviceEmpleados.editaEmpleado(empleado);
-		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
-		return "listadeempleados";
-	}
-
-	@GetMapping("/empleado/{id}")
+@GetMapping("/empleado/{id}")
 	public String verDetalle(@PathVariable("id") int id, Model model) {
 		Empleado empleado = serviceEmpleados.buscarEmpleado(id);
 		model.addAttribute("empleado", empleado);

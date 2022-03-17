@@ -12,9 +12,10 @@ public interface IEmpleadosService {
 	List<Empleado> listaEmpleados();
 	List<Empleado> buscarPorEmpleo(String trabajo);
 	String guardarArchivo(MultipartFile foto, String ruta);
-	void insertar(@Valid Empleado empleado);
-	void eliminar(Integer id);
+	void insertar(@Valid Empleado empleado);	
 	Empleado buscarEmpleado(Integer id);
 	void editaEmpleado(Empleado empleado);
-
+	void cambiaFoto(Empleado empleado);
+	void eliminar(int id);
+	
 }

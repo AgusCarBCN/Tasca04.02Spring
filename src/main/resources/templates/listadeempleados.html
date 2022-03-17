@@ -2,7 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
-<meta charset="UTF-8">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 <title>Insert title here</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -11,10 +15,17 @@
 	crossorigin="anonymous">
 </head>
 
-<h1 class="text-center">Listado de empleados</h1>
+<h2 class="text-center">Listado de empleados</h2>
 
 <body class="p-3 mb-2 bg-dark text-white">
+	<a class="btn btn-primary" th:href="@{/empleados/formulario/}" title="Añadir un nuevo empleado" role="button"><i class="fas fa-file" aria-hidden="true"></i> Añadir Empleado</a>  
 	<header th:insert="fragments/menu.html :: menu"> </header>
+	<div th:if="${mensaje!=null}" class='alert alert-success'
+		th:text="${mensaje}" role='alert'></div>
+	<div th:if="${mensaje2!=null}" class='alert alert-success'
+		th:text="${mensaje2}" role='alert'></div>	
+	<div th:if="${mensaje3!=null}" class='alert alert-success'
+		th:text="${mensaje3}" role='alert'></div>	
 	<table class="table table-dark table-striped">
 		<thead>
 			<tr>
@@ -23,7 +34,7 @@
 				<th>EMPLEO</th>
 				<th>SALARIO</th>
 				<th>FOTO</th>
-				<th>DISPONIBILIDAD</th>
+				<th>DISPONIBLE</th>
 				<th>ELIMINAR</th>
 				<th>MODIFICAR</th>
 				<th>EMPLEADO</th>
@@ -50,8 +61,9 @@
 						foto</a></td>
 		</tbody>
 	</table>
-	
-	<div th:if="${mensaje!=null}" class='alert alert-success' th:text="${mensaje}" role='alert'></div>
+
+	<!--  <div th:if="${mensaje!=null}" class='alert alert-success'
+		th:text="${mensaje}" role='alert'></div>
 	<div class="align-center">
 
 		<h3>Añadir empleado</h3>
@@ -130,7 +142,7 @@
 				<button type="submit" class="btn btn-primary">Modificar</button>
 			</div>
 		</form>
-	</div>
+	</div>-->
 
 
 </body>

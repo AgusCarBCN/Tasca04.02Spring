@@ -13,8 +13,8 @@ import carnerero.agustin.Tasca04.Spring.model.Empleado;
 
 @Service
 public class EmpleadosServiceImpl implements IEmpleadosService {
-	private List<Empleado> listaEmpleados=null;
-	private List<Empleado> listaPorTrabajos=null;
+	private List<Empleado> listaEmpleados = null;
+	private List<Empleado> listaPorTrabajos = null;
 
 	public EmpleadosServiceImpl() {
 		listaEmpleados = new ArrayList<>();
@@ -26,6 +26,18 @@ public class EmpleadosServiceImpl implements IEmpleadosService {
 		listaEmpleados.add(new Empleado(5, "Ambrosio", "operario", 1));
 		listaEmpleados.add(new Empleado(6, "Julia", "tecnico", 0));
 		listaEmpleados.add(new Empleado(7, "Adela", "gerente", 0));
+		for (Empleado empleado : listaEmpleados) {
+			if (empleado.getTrabajo().equals("operario")) {
+				empleado.setSalario(20000.0);
+			} else if (empleado.getTrabajo().equals("administrativo")) {
+				empleado.setSalario(30000.0);
+			} else if (empleado.getTrabajo().equals("tecnico")) {
+				empleado.setSalario(40000.0);
+			} else if (empleado.getTrabajo().equals("gerente")) {
+				empleado.setSalario(60000.0);
+			}
+
+		}
 	}
 
 	@Override
@@ -36,6 +48,16 @@ public class EmpleadosServiceImpl implements IEmpleadosService {
 	@Override
 	public void insertar(Empleado empleado) {
 		listaEmpleados.add(empleado);
+		if (empleado.getTrabajo().equals("operario")) {
+			empleado.setSalario(20000.0);
+		} else if (empleado.getTrabajo().equals("administrativo")) {
+			empleado.setSalario(30000.0);
+		} else if (empleado.getTrabajo().equals("tecnico")) {
+			empleado.setSalario(40000.0);
+		} else if (empleado.getTrabajo().equals("gerente")) {
+			empleado.setSalario(60000.0);
+		}
+
 	}
 
 	@Override
@@ -60,15 +82,24 @@ public class EmpleadosServiceImpl implements IEmpleadosService {
 				emp.setId(empleado.getId());
 				emp.setNombre(empleado.getNombre());
 				emp.setTrabajo(empleado.getTrabajo());
-				emp.setSalario(empleado.getSalario());
 				emp.setDisponible(empleado.getDisponible());
-				emp.setFoto(empleado.getFoto());
+						
+				if (emp.getTrabajo().equals("operario")) {
+					emp.setSalario(20000.0);
+				} else if (empleado.getTrabajo().equals("administrativo")) {
+					emp.setSalario(30000.0);
+				} else if (empleado.getTrabajo().equals("tecnico")) {
+					emp.setSalario(40000.0);
+				} else if (empleado.getTrabajo().equals("gerente")) {
+					emp.setSalario(60000.0);
+				}
 			}
 		}
 		if (!encontrado) {
 			System.err.println("No se ha encontrado ningun operario con ese identidad.");
 		}
 	}
+	
 
 	@Override
 	public String guardarArchivo(MultipartFile multiPart, String ruta) {
@@ -88,7 +119,7 @@ public class EmpleadosServiceImpl implements IEmpleadosService {
 	}
 
 	@Override
-	public void eliminar(Integer id) {
+	public void eliminar(int id) {
 		boolean encontrado = false;
 		Empleado empleado;
 		Iterator<Empleado> it = listaEmpleados.iterator();
@@ -122,6 +153,24 @@ public class EmpleadosServiceImpl implements IEmpleadosService {
 			System.err.println("No se ha encontrado ningun operario con ese identidad.");
 		}
 		return empleado;
+	}
+
+	@Override
+	public void cambiaFoto(Empleado empleado) {
+		boolean encontrado = false;
+		Iterator<Empleado> it = listaEmpleados.iterator();
+		while (it.hasNext() && !encontrado) {
+			Empleado emp = it.next();
+			if (emp.getId() == empleado.getId()) {
+				encontrado = true;
+				emp.setFoto(empleado.getFoto());
+				
+			}
+		}
+		if (!encontrado) {
+			System.err.println("No se ha encontrado ningun operario con ese identidad.");
+		}
+		
 	}
 
 }
