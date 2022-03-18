@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -31,12 +32,13 @@ public class EmpleadosController {
 	// Inyectamos clase servicio en controller
 	@Autowired
 	private IEmpleadosService serviceEmpleados;
-
+	
 	private String ruta = "C:/empleados/img-fotos/";
 
 	@GetMapping("/")
 	public String mostrarTodos(Model model) {
 		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
+		
 		return "listadeempleados";
 	}
 
@@ -125,7 +127,7 @@ public class EmpleadosController {
 	public String cambiarFoto(@PathVariable Integer id, Model model) {
 		Empleado empleado = serviceEmpleados.buscarEmpleado(id);
 		model.addAttribute("empleados", serviceEmpleados.listaEmpleados());
-		model.addAttribute("empleado", empleado);
+		model.addAttribute("empleado", empleado);		
 		return "formulario2";
 	}
 	
