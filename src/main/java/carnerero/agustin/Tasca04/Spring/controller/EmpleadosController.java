@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import carnerero.agustin.Tasca04.Spring.model.Empleado;
 import carnerero.agustin.Tasca04.Spring.service.IEmpleadosService;
 
@@ -32,8 +32,8 @@ public class EmpleadosController {
 	// Inyectamos clase servicio en controller
 	@Autowired
 	private IEmpleadosService serviceEmpleados;
-	
-	private String ruta = "C:/empleados/img-fotos/";
+	@Value("${tasca0402.path.images}")
+	private String ruta="C:/empleados/img-fotos/";
 
 	@GetMapping("/")
 	public String mostrarTodos(Model model) {
